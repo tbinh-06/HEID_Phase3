@@ -209,7 +209,8 @@ h1,h2{font-family:var(--serif);letter-spacing:-.015em}
 .kpi b{display:block;font-family:var(--serif);font-size:1.45rem;line-height:1.2;margin-top:2px}
 .kpi span{font-size:.84rem;color:var(--muted)}
 .gantt{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:8px 0 14px;margin-top:18px;overflow-x:auto}
-.gt{display:grid;grid-template-columns:minmax(240px,1.6fr) repeat(20,minmax(42px,1fr));min-width:1100px;position:relative}
+.gt{display:grid;grid-template-columns:minmax(260px,1.4fr) repeat(4,minmax(170px,1fr));min-width:960px;position:relative}
+.mlist li{grid-template-columns:96px 1fr}
 .gt .hd.sub.pick{color:var(--brandtx);font-weight:700}
 .gt .hd.sub{font-size:.7rem;font-weight:500;padding:4px 2px}
 .gt .cell:not(.wk){border-left-style:dotted;border-left-color:color-mix(in srgb,var(--line) 60%,transparent)}
@@ -381,7 +382,6 @@ h1,h2,h3,.vcs b,.zh b{font-weight:700}
 <section class="panel" id="p-tl" role="tabpanel" aria-labelledby="t-tl" hidden><div class="wrap">
   <div class="dhead"><div><h2>Lịch khảo sát nhu cầu báo cáo các phòng</h2></div></div>
   <div class="gantt"><div class="gt" id="gantt"></div>
-    <div class="glegend"><span><i style="background:var(--kd)"></i>Base làm</span><span><i style="background:var(--mkt)"></i>HEID làm</span><span><i style="background:var(--ok)"></i>Hai bên cùng làm</span><span><i style="background:var(--warn);width:12px;height:12px;transform:rotate(45deg);border-radius:2px"></i>Mốc</span></div>
   </div>
   <div class="cols2">
     <div class="box"><h3>Các mốc chính</h3><ul class="mlist" id="mlist"></ul></div>
@@ -694,29 +694,24 @@ function deptPanel(d){
 $('#dpanels').innerHTML = MAIN.map(d => `<section class="panel" id="p-${d}" role="tabpanel" aria-labelledby="t-${d}" style="--c:var(${C[d]})" hidden>${deptPanel(d)}</section>`).join('');
 
 // ================= TAB TIMELINE =================
-// Mỗi tuần 5 cột ngày (Thứ Hai đến Thứ Sáu). Cột a, b tính theo ngày, bắt đầu từ Thứ Hai 12/10.
-const WEEKS = [['12–16/10', 'Tuần này', true, 12, 10], ['19–23/10', 'Tuần 1', false, 19, 10], ['26–30/10', 'Tuần 2', false, 26, 10], ['2–6/11', 'Tuần 3', false, 2, 11]];
+// Mỗi cột là một tuần. Ngày Thứ Ba, Thứ Năm trong từng dòng chỉ là lịch đề xuất.
+const WEEKS = [['12–16/10', 'Tuần này', true], ['19–23/10', 'Tuần 1', false], ['26–30/10', 'Tuần 2', false], ['2–6/11', 'Tuần 3', false]];
 const TASKS = [
-  {t:'Chuẩn bị, gửi form khảo sát', s:'Chốt đầu mối và lịch khảo sát 4 phòng', a:2, b:3, o:'both', l:'14–15/10'},
-  {t:'Các phòng điền form', s:'Điền trước buổi khảo sát của phòng', a:3, b:4, o:'heid', l:'15–16/10'},
-  {t:'Khảo sát Ban PT CT&ND', s:'Đề xuất: Thứ Ba 20/10', a:6, b:6, o:'both', l:'20/10'},
-  {t:'Khảo sát P. Kinh doanh', s:'Đề xuất: Thứ Năm 22/10', a:8, b:8, o:'both', l:'22/10'},
-  {t:'Khảo sát P. Marketing – Truyền thông', s:'Đề xuất: Thứ Ba 27/10', a:11, b:11, o:'both', l:'27/10'},
-  {t:'Khảo sát P. Kế toán – Tài vụ', s:'Đề xuất: Thứ Năm 29/10', a:13, b:13, o:'both', l:'29/10'},
-  {t:'Final giải pháp, demo báo cáo', s:'Theo nhu cầu đã khảo sát của 4 phòng', a:15, b:19, o:'both', l:'2–6/11'}
+  {t:'Chuẩn bị, gửi form, các phòng điền form', s:'Chốt đầu mối và lịch khảo sát 4 phòng', w:0, o:'both'},
+  {t:'Khảo sát Ban PT CT&ND', s:'Lịch đề xuất: Thứ Ba 20/10', w:1, o:'both'},
+  {t:'Khảo sát P. Kinh doanh', s:'Lịch đề xuất: Thứ Năm 22/10', w:1, o:'both'},
+  {t:'Khảo sát P. Marketing – Truyền thông', s:'Lịch đề xuất: Thứ Ba 27/10', w:2, o:'both'},
+  {t:'Khảo sát P. Kế toán – Tài vụ', s:'Lịch đề xuất: Thứ Năm 29/10', w:2, o:'both'},
+  {t:'Final giải pháp, demo báo cáo', s:'Theo nhu cầu đã khảo sát của 4 phòng', w:3, o:'both'}
 ];
-const MS = [['16/10', 'Các phòng hoàn thành form khảo sát.'], ['20/10', 'Khảo sát Ban PT CT&ND (Thứ Ba).'], ['22/10', 'Khảo sát P. Kinh doanh (Thứ Năm).'], ['27/10', 'Khảo sát P. Marketing – Truyền thông (Thứ Ba).'], ['29/10', 'Khảo sát P. Kế toán – Tài vụ (Thứ Năm).'], ['6/11', 'Final giải pháp, demo báo cáo.']];
+const MS = [['Tuần này', 'Chuẩn bị, gửi form khảo sát, các phòng điền form (12–16/10).'], ['Tuần 1', 'Khảo sát Ban PT CT&ND và P. Kinh doanh (19–23/10). Lịch đề xuất: Thứ Ba 20/10, Thứ Năm 22/10.'], ['Tuần 2', 'Khảo sát P. Marketing – Truyền thông và P. Kế toán – Tài vụ (26–30/10). Lịch đề xuất: Thứ Ba 27/10, Thứ Năm 29/10.'], ['Tuần 3', 'Final giải pháp, demo báo cáo (2–6/11).']];
 (function(){
-  const N = WEEKS.length * 5;
-  let h = `<div class="hd" style="text-align:left;padding-left:16px;grid-row:1 / span 2">Hạng mục</div>` +
-    WEEKS.map((w, i) => `<div class="hd${w[2] ? ' now' : ''}" style="grid-row:1;grid-column:${i * 5 + 2} / span 5"><b>${w[0]}</b>${w[1]}</div>`).join('') +
-    WEEKS.map((w, i) => [0, 1, 2, 3, 4].map(d => `<div class="hd sub${(i === 1 || i === 2) && (d === 1 || d === 3) ? ' pick' : ''}" style="grid-row:2;grid-column:${i * 5 + d + 2}">T${d + 2}<br>${w[3] + d}/${w[4]}</div>`).join('')).join('');
+  let h = `<div class="hd" style="text-align:left;padding-left:16px">Hạng mục</div>` + WEEKS.map((w, i) => `<div class="hd${w[2] ? ' now' : ''}" style="grid-row:1;grid-column:${i + 2}"><b>${w[0]}</b>${w[1]}</div>`).join('');
   TASKS.forEach((t, r) => {
-    const row = r + 3;
+    const row = r + 2;
     h += `<div class="lab" style="grid-row:${row};grid-column:1">${esc(t.t)}<small>${esc(t.s)}</small></div>`;
-    for (let c = 0; c < N; c++) h += `<div class="cell${c % 5 ? '' : ' wk'}" style="grid-row:${row};grid-column:${c + 2}"></div>`;
-    const one = t.a === t.b;
-    h += `<div class="bar ${t.o}${one ? ' one' : ''}" style="grid-row:${row};grid-column:${t.a + 2} / ${t.b + 3}"${one ? ` data-l="${esc(t.l)}"` : ''}>${one ? '' : esc(t.l)}</div>`;
+    for (let c = 0; c < WEEKS.length; c++) h += `<div class="cell wk" style="grid-row:${row};grid-column:${c + 2}"></div>`;
+    h += `<div class="bar ${t.o}" style="grid-row:${row};grid-column:${t.w + 2}">${esc(WEEKS[t.w][0])}</div>`;
   });
   $('#gantt').innerHTML = h;
   $('#mlist').innerHTML = MS.map(m => `<li><b>${m[0]}</b><span>${esc(m[1])}</span></li>`).join('');
