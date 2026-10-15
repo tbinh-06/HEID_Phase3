@@ -17,7 +17,7 @@
   --board:#FAFBFD; --dot:#DCE1E9;
   --ctnd:#1E6B57; --mkt:#A35A0E; --kd:#1F4F9E; --kt:#6A3C83;
   --io:#3E6A8A; --mar:#B4235A; --ext:#6B7385; --warn:#B42318; --ok:#1E6B57;
-  --serif:"Literata", Georgia, "Times New Roman", serif;
+  --serif:"Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
   --sans:"Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark){
@@ -244,27 +244,128 @@ footer{padding:26px 24px 48px;color:var(--muted);font-size:.82rem}
 }
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 @media print{.tabs,.ctrl{display:none}.scroll{overflow:visible}body{background:#fff}}
+
+/* ===== Giao diện theo màu thương hiệu HEID (xanh đậm, xanh trời của logo) ===== */
+:root{--brand:#13438A;--brand2:#0A8ED0;--brandtx:#13438A;--paper:#F3F6FB;--edge:#DFE6F0;--lift:0 1px 2px rgba(15,37,71,.06),0 14px 30px -20px rgba(15,37,71,.35)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--brand:#0F2F63;--brand2:#0B6A9E;--brandtx:#8DB6F2;--paper:#0B0F16;--edge:#2A3343;--lift:0 1px 2px rgba(0,0,0,.4)}}
+:root[data-theme="dark"]{--brand:#0F2F63;--brand2:#0B6A9E;--brandtx:#8DB6F2;--paper:#0B0F16;--edge:#2A3343;--lift:0 1px 2px rgba(0,0,0,.4)}
+body{background:var(--paper)}
+.top{background:var(--brand);color:#fff;padding:24px 0 18px}
+.top .wrap{max-width:1880px}
+.top h1{color:#fff;font-size:clamp(1.7rem,2.8vw,2.35rem);letter-spacing:-.02em}
+.top p{color:#C7DAF3;font-size:.95rem;max-width:80ch}
+.brandrow{gap:22px;justify-content:center}
+.top h1{font-weight:700;letter-spacing:-.025em}
+h1,h2,h3,.vcs b,.zh b{font-weight:700}
+.logo{width:104px;height:104px;border-radius:18px;padding:7px;box-shadow:0 0 0 3px rgba(255,255,255,.18)}
+.tabs{background:var(--brand);border-bottom:0;margin-top:0;box-shadow:0 1px 0 rgba(0,0,0,.12)}
+.tabs .in{max-width:1880px;margin:0 auto;gap:4px;padding:0 24px;justify-content:safe center}
+.tab{color:#C7DAF3;border-bottom:0;border-radius:12px 12px 0 0;padding:12px 18px 13px;font-size:.94rem}
+.tab:hover{color:#fff;background:rgba(255,255,255,.08)}
+.tab[aria-selected="true"]{background:var(--paper);color:var(--brandtx);font-weight:600}
+.tab i{box-shadow:0 0 0 1.5px rgba(255,255,255,.7)}
+
+/* chuỗi giai đoạn: xen kẽ hai màu xanh của logo */
+.vc{padding:22px 0 4px}
+.vcs{background:var(--brand);color:#fff;padding:16px 30px 16px 36px}
+.vcs:nth-child(even){background:var(--brand2)}
+.vcs b{font-size:1.02rem}
+.vcs span{color:rgba(255,255,255,.82)}
+.vcs.on{box-shadow:inset 0 -4px 0 #FFD166}
+.vcs.off{opacity:.45}
+.vcd em{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;font-weight:500;display:inline-flex;align-items:center;gap:5px}
+.vcd em::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--dc);box-shadow:0 0 0 1.5px #fff}
+.vchint{margin:10px 0 0}
+
+/* thanh điều khiển và chú thích */
+.ctrl{background:var(--surface);border:1px solid var(--edge);border-radius:14px;padding:10px 14px;margin-top:14px;box-shadow:var(--lift)}
+.flt{border-color:var(--edge)}
+.cap{padding:10px 2px 4px;color:var(--ink)}
+
+/* bảng sơ đồ và các khối phòng */
+.board{background-color:var(--surface);border-color:var(--edge);border-radius:20px;box-shadow:var(--lift);background-image:radial-gradient(color-mix(in srgb,var(--edge) 80%,transparent) 1px,transparent 1.3px)}
+.under .w{opacity:.4}
+.zone{background:var(--surface);border:1px solid var(--edge);border-top:4px solid var(--zc);border-radius:16px;box-shadow:var(--lift)}
+.zone.ghost{border-style:dashed;border-top-style:dashed;background:color-mix(in srgb,var(--zc) 4%,var(--surface))}
+.zh{padding:14px 16px 8px}
+.badge{width:40px;height:40px;border-radius:11px;font-size:.85rem}
+.zh b{font-size:1.08rem}
+.sec h4{color:var(--brandtx);font-size:.76rem;letter-spacing:.01em}
+.pill{border-color:var(--edge);border-radius:8px;padding:7px 11px}
+.qts li{background:color-mix(in srgb,var(--zc) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--zc) 16%,transparent)}
+
+/* tab phòng ban và timeline */
+.dhead{padding-top:30px}
+.dhead .badge{width:52px;height:52px;border-radius:14px}
+.sh{color:var(--brandtx)}
+.iobox,.box,.kpi,.gantt{border-color:var(--edge);border-radius:16px;box-shadow:var(--lift)}
+.hv{border-radius:16px}
+.rp{border-color:var(--edge);border-radius:12px;box-shadow:var(--lift)}
+.kpi b{color:var(--brandtx)}
+.gt .hd b{color:var(--brandtx)}
+.bar{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.74rem;padding:6px 8px}
+
+/* ===== Làm đẹp lần 2: thanh giai đoạn nhẹ, thanh công cụ gọn, sơ đồ thoáng ===== */
+:root{--st1:#E7EFFA;--st2:#D8E6F7;--sttx:#13438A;--stsub:#4A5F80;--chipbg:#FFFFFF;--chipbd:#C8D7EC;--chiptx:#23365A}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--st1:#16233A;--st2:#1B2C48;--sttx:#CFE0F7;--stsub:#93A9C8;--chipbg:#0F1828;--chipbd:#2B3D5C;--chiptx:#CFE0F7}}
+:root[data-theme="dark"]{--st1:#16233A;--st2:#1B2C48;--sttx:#CFE0F7;--stsub:#93A9C8;--chipbg:#0F1828;--chipbd:#2B3D5C;--chiptx:#CFE0F7}
+.vc{padding:26px 0 4px}
+.vcs{background:var(--st1);color:var(--sttx);padding:18px 30px 18px 38px;transition:background .15s,color .15s}
+.vcs:nth-child(even){background:var(--st2)}
+.vcs b{font-size:1rem;letter-spacing:-.01em}
+.vcs span{color:var(--stsub)}
+.vcs:hover{filter:brightness(.97)}
+.vcd{gap:5px!important;margin-top:10px!important}
+.vcd em{background:var(--chipbg);border:1px solid var(--chipbd);color:var(--chiptx);font-size:.72rem;padding:2px 9px}
+.vcd em::before{box-shadow:none}
+.vcs.on{background:var(--brand);color:#fff;box-shadow:none}
+.vcs.on span{color:rgba(255,255,255,.85)}
+.vcs.on .vcd em{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);color:#fff}
+.vcs.off{opacity:.55}
+
+.ctrl{justify-content:space-between;gap:10px 18px;margin-top:18px;padding:10px 16px}
+.cgroup{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.legend2{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.84rem;color:var(--muted)}
+.legend2 span{display:inline-flex;align-items:center;gap:7px}
+.lg{display:inline-block;width:24px;height:15px;border-radius:5px;border:2px solid var(--brandtx);background:var(--surface)}
+.lg.dash{border-style:dashed;border-color:var(--muted)}
+.lg.wire{border:0;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--ctnd) 0 33%,var(--mkt) 33% 66%,var(--kd) 66%)}
+.cap{background:color-mix(in srgb,var(--brand2) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--brand2) 28%,transparent);border-radius:12px;padding:10px 14px;margin:12px 0 16px;min-height:0;font-size:.92rem}
+.cap .ci{flex:none;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--brand2);color:#fff;font-weight:700;font-size:.78rem;font-style:normal}
+
+.board{background-image:none;background-color:color-mix(in srgb,var(--paper) 60%,var(--surface))}
+.under .w{opacity:.3}
+.w.k-tt,.w.k-tc{stroke-width:1.6}
+.zone{border-top-width:3px}
+.zh{background:color-mix(in srgb,var(--zc) 8%,var(--surface));border-radius:13px 13px 0 0;border-bottom:1px solid color-mix(in srgb,var(--zc) 16%,transparent);padding:14px 16px;margin-bottom:10px}
+.zone.ghost .zh{background:transparent}
+.zh b{font-size:1.04rem;letter-spacing:-.01em}
+.sec h4{font-size:.74rem;margin-bottom:8px}
+.pill{font-size:.86rem;padding:7px 10px;box-shadow:0 1px 0 rgba(15,37,71,.04)}
+.pill.in{border-left-width:3px}
+.pill.out{border-right-width:3px}
+.pill .who{font-size:.7rem}
+.qts li{font-size:.78rem;padding:5px 8px}
 </style>
 </head>
 <body>
-<header class="top wrap"><div class="brandrow"><img class="logo" alt="Logo HEID" width="64" height="64" src="data:image/png;base64,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"><div>
-  <h1>Value chain – chuỗi giá trị HEID</h1>
-  <p>Bốn phòng trên trục chính sản xuất – kinh doanh, đầu ra của phòng này là đầu vào của phòng kia. Kèm gợi ý báo cáo từng phòng và lịch khảo sát Phase 3.</p></div></div>
-</header>
+<header class="top"><div class="wrap"><div class="brandrow"><img class="logo" alt="Logo HEID" width="64" height="64" src="data:image/png;base64,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"><div>
+  <h1>Value chain – chuỗi giá trị HEID</h1></div></div>
+</div></header>
 <nav class="tabs" aria-label="Các tab"><div class="in" id="tabs" role="tablist"></div></nav>
 
 <!-- Tab 1 -->
 <section class="panel" id="p-all" role="tabpanel" aria-labelledby="t-all"><div class="wide">
   <div class="vc" id="vc" aria-label="Chuỗi giá trị tổng quan"></div>
-  <p class="vchint">Bấm một giai đoạn để xem các quy trình của từng phòng thuộc giai đoạn đó trên sơ đồ bên dưới, bấm lại để bỏ.</p>
-  <div class="ctrl" id="ctrl">
+    <div class="ctrl" id="ctrl"><div class="cgroup">
     <span class="cl">Loại luồng</span>
     <button class="flt" type="button" data-k="sp" aria-pressed="true"><svg viewBox="0 0 34 10"><line x1="1" y1="5" x2="33" y2="5" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/></svg>Sản phẩm</button>
     <button class="flt" type="button" data-k="tt" aria-pressed="true"><svg viewBox="0 0 34 10"><line x1="1" y1="5" x2="33" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Thông tin, yêu cầu</button>
     <button class="flt" type="button" data-k="tc" aria-pressed="true"><svg viewBox="0 0 34 10"><line x1="1" y1="5" x2="33" y2="5" stroke="currentColor" stroke-width="2" stroke-dasharray="6 5"/></svg>Tài chính, chứng từ</button>
-    <span class="hint">Khối viền liền là phòng ban HEID; khối viền đứt là bên ngoài hoặc phòng phối hợp. Dây mang màu của bên giao ra.</span>
+    </div>
+    <div class="legend2"><span><i class="lg"></i>Phòng ban HEID</span><span><i class="lg dash"></i>Bên ngoài, phòng phối hợp</span><span><i class="lg wire"></i>Dây mang màu bên giao</span></div>
   </div>
-  <div class="cap"><span id="cap"></span><button class="clr" type="button" id="clr" hidden>Bỏ chọn</button></div>
+  <div class="cap"><span class="ci" aria-hidden="true">i</span><span id="cap"></span><button class="clr" type="button" id="clr" hidden>Bỏ chọn</button></div>
   <div class="scroll"><div class="board" id="board">
     <svg class="wires under" id="wu" aria-hidden="true"></svg>
     <svg class="wires over" id="wo" aria-hidden="true"></svg>
@@ -275,14 +376,7 @@ footer{padding:26px 24px 48px;color:var(--muted);font-size:.82rem}
 
 <!-- Tab timeline -->
 <section class="panel" id="p-tl" role="tabpanel" aria-labelledby="t-tl" hidden><div class="wrap">
-  <div class="dhead"><div><h2>Lịch khảo sát nhu cầu báo cáo các phòng</h2>
-    <p>Khảo sát 4 phòng chính trên chuỗi sản xuất – kinh doanh, dựng demo và chốt với từng phòng trong tháng 11, chốt phương án và hợp đồng để triển khai từ tháng 12. Thứ tự các phòng là đề xuất, cần HEID xác nhận.</p></div></div>
-  <div class="kpis">
-    <div class="kpi"><small>Bắt đầu khảo sát</small><b>21/10</b><span>Giữa tuần sau</span></div>
-    <div class="kpi"><small>Phòng được khảo sát</small><b>4 phòng</b><span>Xong phòng cuối ngày 4/11</span></div>
-    <div class="kpi"><small>Chốt phương án, hợp đồng</small><b>20/11</b><span>Sau khi chốt demo với các phòng</span></div>
-    <div class="kpi"><small>Triển khai</small><b>Tháng 12</b><span>Báo cáo kết quả 31/12</span></div>
-  </div>
+  <div class="dhead"><div><h2>Lịch khảo sát nhu cầu báo cáo các phòng</h2></div></div>
   <div class="gantt"><div class="gt" id="gantt"></div>
     <div class="glegend"><span><i style="background:var(--kd)"></i>Base làm</span><span><i style="background:var(--mkt)"></i>HEID làm</span><span><i style="background:var(--ok)"></i>Hai bên cùng làm</span><span><i style="background:var(--warn);width:12px;height:12px;transform:rotate(45deg);border-radius:2px"></i>Mốc</span></div>
   </div>
@@ -529,7 +623,7 @@ function render(){
     const ins = I.filter(x => x.to.includes(fz)), outs = I.filter(x => x.f.includes(fz));
     const src = [...new Set(ins.flatMap(x => x.f))], dst = [...new Set(outs.flatMap(x => x.to))];
     cap.innerHTML = `<b>${esc(Z[fz].short)}</b>&nbsp;nhận ${ins.length} đầu vào${src.length ? ' từ ' + esc(names(src)) : ''}, giao ${outs.length} đầu ra${dst.length ? ' cho ' + esc(names(dst)) : ''}.`;
-  } else cap.textContent = `${I.length} điểm bàn giao giữa các khối.`;
+  } else cap.textContent = `${I.length} điểm bàn giao giữa các khối. Bấm một giai đoạn hoặc tên phòng để lọc, rê chuột vào một ô để xem nó đi đâu.`;
   clr.hidden = !(pin || fz);
 }
 board.addEventListener('pointerover', e => { const p = e.target.closest('.pill'); if (p && e.pointerType === 'mouse') { hover = p.dataset.i; render(); } });
