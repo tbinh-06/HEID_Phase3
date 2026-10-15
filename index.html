@@ -209,7 +209,8 @@ h1,h2{font-family:var(--serif);letter-spacing:-.015em}
 .kpi b{display:block;font-family:var(--serif);font-size:1.45rem;line-height:1.2;margin-top:2px}
 .kpi span{font-size:.84rem;color:var(--muted)}
 .gantt{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:8px 0 14px;margin-top:18px;overflow-x:auto}
-.gt{display:grid;grid-template-columns:minmax(240px,1.6fr) repeat(14,minmax(52px,1fr));min-width:1100px;position:relative}
+.gt{display:grid;grid-template-columns:minmax(240px,1.6fr) repeat(20,minmax(42px,1fr));min-width:1100px;position:relative}
+.gt .hd.sub.pick{color:var(--brandtx);font-weight:700}
 .gt .hd.sub{font-size:.7rem;font-weight:500;padding:4px 2px}
 .gt .cell:not(.wk){border-left-style:dotted;border-left-color:color-mix(in srgb,var(--line) 60%,transparent)}
 .gt .cell.wk{border-left:1px solid var(--line)}
@@ -346,6 +347,8 @@ h1,h2,h3,.vcs b,.zh b{font-weight:700}
 .pill.out{border-right-width:3px}
 .pill .who{font-size:.7rem}
 .qts li{font-size:.78rem;padding:5px 8px}
+.bar.one{overflow:visible;min-height:22px;margin:8px 6px}
+.bar.one::after{content:attr(data-l);position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);color:var(--ink);font-weight:700;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -386,12 +389,12 @@ h1,h2,h3,.vcs b,.zh b{font-weight:700}
       <li>Cử một đầu mối trả lời khảo sát và một người nắm dữ liệu.</li>
       <li>Điền form khảo sát (khoảng 20–30 phút), ưu tiên dán link các file báo cáo đang dùng.</li>
       <li>Dành thời gian cho buổi khảo sát với Base theo lịch của phòng.</li>
-      <li>Xem và góp ý demo báo cáo của phòng trong tuần 9–13/11.</li>
+      <li>Xem và góp ý demo báo cáo của phòng trong tuần 2–6/11.</li>
     </ol>
-    <h3 style="margin-top:16px">Cần HEID chốt trước 21/10</h3><ol>
-      <li>Hình thức huy động: buổi kick-off hay Ban lãnh đạo giao việc trực tiếp.</li>
-      <li>Người đầu mối của 4 phòng và lịch khảo sát cụ thể của từng phòng.</li>
-      <li>Thứ tự khảo sát 4 phòng (đề xuất: Ban PT CT&amp;ND, sau đó P. KD và P. MKT-TT, cuối cùng P. KT-TV).</li>
+    <h3 style="margin-top:16px">Cần HEID chốt trong tuần này</h3><ol>
+      <li>Người đầu mối của 4 phòng.</li>
+      <li>Xác nhận lịch khảo sát đề xuất: Thứ Ba và Thứ Năm của tuần 1 và tuần 2 (20, 22, 27, 29/10).</li>
+      <li>Thứ tự 4 phòng (đề xuất: Ban PT CT&amp;ND, P. KD, P. MKT-TT, P. KT-TV).</li>
     </ol></div>
   </div>
 </div></section>
@@ -691,30 +694,29 @@ function deptPanel(d){
 $('#dpanels').innerHTML = MAIN.map(d => `<section class="panel" id="p-${d}" role="tabpanel" aria-labelledby="t-${d}" style="--c:var(${C[d]})" hidden>${deptPanel(d)}</section>`).join('');
 
 // ================= TAB TIMELINE =================
-// Mỗi tuần chia 2 nửa: đầu tuần (Thứ Hai–Thứ Ba) và cuối tuần (Thứ Tư–Thứ Sáu). Cột a, b tính theo nửa tuần.
-const WEEKS = [['14–16/10', 'Tuần này', true, false], ['19–23/10', 'Tuần 1', false, true], ['26–30/10', 'Tuần 2', false, true], ['2–6/11', 'Tuần 3', false, true], ['9–13/11', 'Tuần 4', false, true], ['16–20/11', 'Tuần 5', false, true], ['Tháng 12', 'Triển khai', false, false]];
+// Mỗi tuần 5 cột ngày (Thứ Hai đến Thứ Sáu). Cột a, b tính theo ngày, bắt đầu từ Thứ Hai 12/10.
+const WEEKS = [['12–16/10', 'Tuần này', true, 12, 10], ['19–23/10', 'Tuần 1', false, 19, 10], ['26–30/10', 'Tuần 2', false, 26, 10], ['2–6/11', 'Tuần 3', false, 2, 11]];
 const TASKS = [
-  {t:'Chốt đầu mối, lịch khảo sát 4 phòng', s:'Ban lãnh đạo giao việc hoặc kick-off', a:0, b:1, o:'both', l:'Chuẩn bị'},
-  {t:'Gửi form khảo sát, các phòng điền phiếu', s:'Điền trước buổi khảo sát của phòng', a:2, b:2, o:'heid', l:'Gửi form'},
-  {t:'Khảo sát phòng 1', s:'Đề xuất: Ban PT CT&ND', a:3, b:3, o:'both', l:'21–23/10'},
-  {t:'Khảo sát phòng 2 và 3', s:'Đề xuất: P. Kinh doanh, P. MKT-TT', a:4, b:5, o:'both', l:'26–30/10'},
-  {t:'Khảo sát phòng 4', s:'Đề xuất: P. Kế toán – Tài vụ', a:6, b:6, o:'both', l:'2–4/11'},
-  {t:'Dựng demo báo cáo', s:'Theo nhu cầu đã khảo sát của 4 phòng', a:7, b:7, o:'base', l:'4–6/11'},
-  {t:'Chốt demo, kế hoạch báo cáo với từng phòng', s:'Mỗi phòng xác nhận báo cáo của mình', a:8, b:9, o:'both', l:'9–13/11'},
-  {t:'Chốt phương án, dựng hợp đồng Phase 3', s:'Phạm vi, khối lượng, giá trị hợp đồng', a:10, b:11, o:'both', l:'16–20/11'},
-  {t:'Triển khai báo cáo', s:'Theo phương án đã chốt', a:12, b:13, o:'base', l:'Báo cáo 31/12'}
+  {t:'Chuẩn bị, gửi form khảo sát', s:'Chốt đầu mối và lịch khảo sát 4 phòng', a:2, b:3, o:'both', l:'14–15/10'},
+  {t:'Các phòng điền form', s:'Điền trước buổi khảo sát của phòng', a:3, b:4, o:'heid', l:'15–16/10'},
+  {t:'Khảo sát Ban PT CT&ND', s:'Đề xuất: Thứ Ba 20/10', a:6, b:6, o:'both', l:'20/10'},
+  {t:'Khảo sát P. Kinh doanh', s:'Đề xuất: Thứ Năm 22/10', a:8, b:8, o:'both', l:'22/10'},
+  {t:'Khảo sát P. Marketing – Truyền thông', s:'Đề xuất: Thứ Ba 27/10', a:11, b:11, o:'both', l:'27/10'},
+  {t:'Khảo sát P. Kế toán – Tài vụ', s:'Đề xuất: Thứ Năm 29/10', a:13, b:13, o:'both', l:'29/10'},
+  {t:'Final giải pháp, demo báo cáo', s:'Theo nhu cầu đã khảo sát của 4 phòng', a:15, b:19, o:'both', l:'2–6/11'}
 ];
-const MS = [['19/10', 'Gửi form khảo sát cho 4 phòng.'], ['21/10', 'Bắt đầu khảo sát phòng 1.'], ['23/10', 'Xong khảo sát phòng 1.'], ['30/10', 'Xong khảo sát phòng 2 và 3.'],
-  ['4/11', 'Xong khảo sát phòng 4.'], ['6/11', 'Có demo báo cáo.'], ['13/11', 'Chốt demo và kế hoạch báo cáo với các phòng.'], ['20/11', 'Chốt phương án, hợp đồng Phase 3.'], ['Tháng 12', 'Triển khai; báo cáo kết quả 31/12 (theo brief).']];
+const MS = [['16/10', 'Các phòng hoàn thành form khảo sát.'], ['20/10', 'Khảo sát Ban PT CT&ND (Thứ Ba).'], ['22/10', 'Khảo sát P. Kinh doanh (Thứ Năm).'], ['27/10', 'Khảo sát P. Marketing – Truyền thông (Thứ Ba).'], ['29/10', 'Khảo sát P. Kế toán – Tài vụ (Thứ Năm).'], ['6/11', 'Final giải pháp, demo báo cáo.']];
 (function(){
+  const N = WEEKS.length * 5;
   let h = `<div class="hd" style="text-align:left;padding-left:16px;grid-row:1 / span 2">Hạng mục</div>` +
-    WEEKS.map((w, i) => `<div class="hd${w[2] ? ' now' : ''}" style="grid-row:1;grid-column:${i * 2 + 2} / span 2"><b>${w[0]}</b>${w[1]}</div>`).join('') +
-    WEEKS.map((w, i) => w[3] ? `<div class="hd sub" style="grid-row:2;grid-column:${i * 2 + 2}">T2–T3</div><div class="hd sub" style="grid-row:2;grid-column:${i * 2 + 3}">T4–T6</div>` : `<div class="hd sub" style="grid-row:2;grid-column:${i * 2 + 2} / span 2"></div>`).join('');
+    WEEKS.map((w, i) => `<div class="hd${w[2] ? ' now' : ''}" style="grid-row:1;grid-column:${i * 5 + 2} / span 5"><b>${w[0]}</b>${w[1]}</div>`).join('') +
+    WEEKS.map((w, i) => [0, 1, 2, 3, 4].map(d => `<div class="hd sub${(i === 1 || i === 2) && (d === 1 || d === 3) ? ' pick' : ''}" style="grid-row:2;grid-column:${i * 5 + d + 2}">T${d + 2}<br>${w[3] + d}/${w[4]}</div>`).join('')).join('');
   TASKS.forEach((t, r) => {
     const row = r + 3;
     h += `<div class="lab" style="grid-row:${row};grid-column:1">${esc(t.t)}<small>${esc(t.s)}</small></div>`;
-    for (let c = 0; c < WEEKS.length * 2; c++) h += `<div class="cell${c % 2 ? '' : ' wk'}" style="grid-row:${row};grid-column:${c + 2}"></div>`;
-    h += `<div class="bar ${t.o}" style="grid-row:${row};grid-column:${t.a + 2} / ${t.b + 3}">${esc(t.l)}</div>`;
+    for (let c = 0; c < N; c++) h += `<div class="cell${c % 5 ? '' : ' wk'}" style="grid-row:${row};grid-column:${c + 2}"></div>`;
+    const one = t.a === t.b;
+    h += `<div class="bar ${t.o}${one ? ' one' : ''}" style="grid-row:${row};grid-column:${t.a + 2} / ${t.b + 3}"${one ? ` data-l="${esc(t.l)}"` : ''}>${one ? '' : esc(t.l)}</div>`;
   });
   $('#gantt').innerHTML = h;
   $('#mlist').innerHTML = MS.map(m => `<li><b>${m[0]}</b><span>${esc(m[1])}</span></li>`).join('');
